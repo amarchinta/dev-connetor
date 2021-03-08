@@ -4,8 +4,8 @@
   "description": "social network developer",
   "main": "server.js",
   "scripts": {
-    "start ": "node server.js" ,
-    "server":"nodemon server.js"
+    "start ": "node server.js",
+    "server": "nodemon server.js"
   },
   "author": "pradip chinta",
   "license": "MIT",
