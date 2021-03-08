@@ -1,10 +1,10 @@
 const express = require('express');
 const app = express();
+require("dotenv").config();
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const db = require('./config/keys').mongoURI;
 const detail = require("./models/User");
-
 
 mongoose.connect(db, {
         useNewUrlParser: true,
@@ -14,7 +14,9 @@ mongoose.connect(db, {
         console.log(err);
 });
 
-app.get('/', (req, res) => res.send('hello pradip welcome to my page '));
+app.get('/', (req, res) => res.json({
+        message: "done"
+}));
 
 app.get("/addData", (req, res) => {
         detail.insertMany(
@@ -29,7 +31,7 @@ app.get("/addData", (req, res) => {
                         { age: 3 },
                         { breed: "German Shephard" }
                 ],
-                function (err, result) {
+                (err, result) => {
                         if (err) {
                                 res.send(err);
                         } else {
@@ -39,9 +41,6 @@ app.get("/addData", (req, res) => {
         );
 });
 
-
-
-const port = process.env.PORT || 5000;
-
-
-app.listen(port, () => console.log(`server running on port ${port}`));
+app.listen(process.env.PORT, () =>
+        console.log(`server running on port ${port}`)
+);
