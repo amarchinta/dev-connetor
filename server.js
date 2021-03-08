@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const db = require('./config/keys').mongoURI;
 const detail = require("./models/User");
+const morgan = require('morgan');
 
 mongoose.connect(db, {
         useNewUrlParser: true,
@@ -13,6 +14,10 @@ mongoose.connect(db, {
 }).catch((err) => {
         console.log(err);
 });
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(morgan('dev')); // logger
 
 app.get('/', (req, res) => res.json({
         message: "done"
@@ -41,6 +46,8 @@ app.get("/addData", (req, res) => {
         );
 });
 
-app.listen(process.env.PORT, () =>
-        console.log(`server running on port ${port}`)
+let { env: { PORT } } = process;
+
+app.listen(PORT, () =>
+        console.log(`server running on port ${PORT}`)
 );
